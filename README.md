@@ -46,7 +46,7 @@ Consider a 5 x 5 grid:
 </tbody>
 </table>
 
-If  the '0' repreent water and the 'X' represent land, you might conclude the there is ONE island.
+If  the '0' represents water and the 'X' represents land, you might conclude the there is ONE island.
 
 Now consider this grid:
 
