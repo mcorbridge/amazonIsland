@@ -4,7 +4,6 @@
  */
 
 
-package src.com.mcorbridge.findisland;
 
 import com.sun.istack.internal.Nullable;
 
