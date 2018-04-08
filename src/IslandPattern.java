@@ -440,4 +440,33 @@ public class IslandPattern {
 		return matrix;
 	}
 
+	public static String singleTest =	"OOOOOOOOOO" +
+										"OOOOOOOOOO" +
+										"OOOOOOOOOO" +
+										"OOOOOOOOOO" +
+										"OOOOXOOOOO" +
+										"OOOOOOOOOO" +
+										"OOOOXOOOOO" +
+										"OOOOOOOOOO" +
+										"OOOOOOOOOO" +
+										"OOOOOOOOOO";
+
+	public static Vector<Vector<String>> buildSingleTest(){
+		Vector<Vector<String>> matrix = new Vector<Vector<String>>();
+		String[] temp = singleTest.split("");
+		int q = 0;
+		int z = 10;
+		for(int n=0;n<10;n++){
+			Vector<String> v = new Vector<>();
+			for(int m=q;m<z;m++){
+				String s = temp[m];
+				v.add(s);
+			}
+			matrix.add(v);
+			q += 10;
+			z += 10;
+		}
+		return matrix;
+	}
+
 }

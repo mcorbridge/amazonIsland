@@ -46,9 +46,9 @@ Consider a 5 x 5 grid:
 </tbody>
 </table>
 
-If  the '0' represents water and the 'X' represents land, you might conclude the there is ONE island.
+If  the '0' represents water and the 'X' represents land, you should conclude that there is ONE island.
 
-Now consider this grid:
+Now consider these grids:
 
 <table>
 <tbody>
@@ -145,7 +145,7 @@ Now consider this grid:
 
 Both these examples also show ONE island if you assume that the edge of the grid is an expanse of water.
 
-Ya follow? How about this:
+Ya follow? How about this one:
 
 <table>
 <tbody>

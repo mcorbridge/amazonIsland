@@ -39,6 +39,7 @@ public class FindIsland {
 		matrixList.add(IslandPattern.buildBox());
 		matrixList.add(IslandPattern.buildBlock());
 		matrixList.add(IslandPattern.buildEmpty());
+		matrixList.add(IslandPattern.buildSingleTest());
 	}
 
 	private static void start() {
@@ -108,6 +109,8 @@ public class FindIsland {
 					if(isValidCell(cellRight))
 						adjacentCells.add(cellRight);
 
+					//System.out.println("for ..." + cellDetails(cell));
+
 					if(isNewIsland(adjacentCells)){
 						totalNumberIslands++;
 						Island island = new Island(totalNumberIslands);
@@ -116,7 +119,6 @@ public class FindIsland {
 						cell.islandNum = totalNumberIslands;
 					}
 
-					placeCellInIsland(cell);
 					setAdjacentCells(cell,adjacentCells);
 				}
 			}
@@ -126,8 +128,9 @@ public class FindIsland {
 
 	private static String cellDetails(Cell cell){
 		String detail = "";
-		detail += "[" + cell.coord[0] + ","  + cell.coord[1] + "] ";
-		detail += " is Island? " + cell.isIsland;
+		detail += " [" + cell.coord[0] + ","  + cell.coord[1] + "] ";
+		detail += " value " + cell.value;
+		detail += " isIsland? " + cell.isIsland;
 		detail += " islandNum: " + cell.islandNum;
 		return detail;
 	}
@@ -140,12 +143,18 @@ public class FindIsland {
 	}
 
 	private static void setAdjacentCells(Cell cell, ArrayList<Cell> adjacentCells){
-		for(Cell adjacentCell: adjacentCells){
-			if(!adjacentCell.isIsland){
-				adjacentCell.isIsland = cell.isIsland;
-				adjacentCell.islandNum = cell.islandNum;
-				//place cell in the island object
 
+		for(Cell adjacentCell: adjacentCells){
+
+			if(!adjacentCell.isIsland){
+				if(!adjacentCell.value.equals("X")){
+					//System.out.println("setAdjacentCells " + cellDetails(adjacentCell));
+				}else{
+					adjacentCell.isIsland = cell.isIsland;
+					adjacentCell.islandNum = cell.islandNum;
+					//place cell in the island object
+					placeCellInIsland(cell);
+				}
 			}else{
 				if(adjacentCell.islandNum < cell.islandNum){
 					// remove island and concat cells
@@ -154,6 +163,18 @@ public class FindIsland {
 				}
 			}
 		}
+	}
+
+	private static Boolean isSingleCellIsland(ArrayList<Cell> adjacentCells){
+		Boolean isSingleIsland = Boolean.TRUE;
+
+		for(Cell cell: adjacentCells){
+			System.out.println("cell.value " + cell.value);
+			if(cell.value.equals("X")){
+				isSingleIsland = Boolean.FALSE;
+			}
+		}
+		return isSingleIsland;
 	}
 
 	private static String cellsDetail(ArrayList<Cell> cells){
@@ -204,9 +225,9 @@ public class FindIsland {
 	private static Boolean isNewIsland(ArrayList<Cell> adjacentCells){
 		int currentIslands = 0;
 		Boolean createNewIsland = Boolean.FALSE;
-		for(int n=0;n<adjacentCells.size();n++){
-			Cell adjacentCell = adjacentCells.get(n);
-			if(adjacentCell.isIsland)
+		for(Cell cell: adjacentCells){
+			//System.out.println("isNewIsland: " + cellDetails(cell));
+			if(cell.isIsland)
 				currentIslands++;
 		}
 		if(currentIslands == 0){
