@@ -138,11 +138,16 @@ public class FindIsland {
 						islands.add(island);
 						cell.isIsland = Boolean.TRUE;
 						cell.islandNum = totalNumberIslands;
-						island.cells.add(cell);
+						isDuplicateCell(cell, island);
+						if(!isDuplicateCell(cell, island)){
+							island.cells.add(cell);
+						}
 					} else {
 						island = getIslandFromCells(adjacentCells);
+						if(!isDuplicateCell(cell, island)){
+							island.cells.add(cell);
+						}
 					}
-
 					setAdjacentCells(cell, adjacentCells, island);
 				}
 			}
@@ -158,22 +163,40 @@ public class FindIsland {
 				if (adjacentCell.value.equals("X")) {
 					adjacentCell.isIsland = cell.isIsland;
 					adjacentCell.islandNum = cell.islandNum;
-					island.cells.add(adjacentCell);
+					isDuplicateCell(cell, island);
+					if(!isDuplicateCell(cell, island)){
+						island.cells.add(cell);
+					}
 				}
 			} else {
 				if (adjacentCell.islandNum < cell.islandNum) { // this is a *collision*
 					removeIsland(cell, island);
-					 cell.isIsland = adjacentCell.isIsland;
-					 cell.islandNum = adjacentCell.islandNum;
+					cell.isIsland = adjacentCell.isIsland;
+					cell.islandNum = adjacentCell.islandNum;
 					totalNumberIslands--;
 				}
 			}
 		}
 	}
 
+	private static Boolean isDuplicateCell(Cell cell, Island island){
+		Boolean isDupe = Boolean.FALSE;
+		for(Cell c: island.cells){
+			if(c.coord[0] == cell.coord[0] && c.coord[1] == cell.coord[1]){
+				isDupe = Boolean.TRUE;
+			}
+		}
+		return isDupe;
+	}
+
+
 	private static void removeIsland(Cell cell, Island island) {
 		Island islandToRemove = getIslandFromCell(cell);
-		island.cells.addAll(island.cells);
+		for (Cell c: islandToRemove.cells) {
+			if(!isDuplicateCell(c, island)){
+				island.cells.add(c);
+			}
+		}
 		islands.remove(islandToRemove);
 	}
 
@@ -266,17 +289,11 @@ public class FindIsland {
 	}
 
 	private static void setMATRIXasIslandNum(Vector<Vector<Cell>> matrix) {
-		for(Vector<Cell> row: MATRIX){
-			for(Cell cell: row){
+
 				for (Island island : islands) {
-					for(Cell c: island.cells){
-						if(cell.coord[0] == c.coord[0] && cell.coord[1] == c.coord[1]){
-							cell.value = Integer.toString(c.islandNum);
-						}
-					}
+					System.out.println(islandDetail(island));
 				}
-			}
-		}
+
 	}
 
 	private static String cellDetail(Cell cell) {
@@ -291,6 +308,7 @@ public class FindIsland {
 	private static String islandDetail(Island island) {
 		String detail = "";
 		detail += "island num {" + island.islandNum + "} ";
+		detail += "num cells=" + island.cells.size() + " ";
 		for (Cell cell : island.cells) {
 			detail += cellDetail(cell) + " | ";
 		}
