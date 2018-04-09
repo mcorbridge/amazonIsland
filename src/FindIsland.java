@@ -132,6 +132,28 @@ public class FindIsland {
 					if (isValidCell(cellRight))
 						adjacentCells.add(cellRight);
 
+					/*
+					 ************************* test **********************
+					 */
+//					Cell cellTopLeft = getCellTopLeft(cell);
+//					if (isValidCell(cellTopLeft))
+//						adjacentCells.add(cellTopLeft);
+//
+//					Cell cellTopRight = getCellTopRight(cell);
+//					if (isValidCell(cellTopRight))
+//						adjacentCells.add(cellTopRight);
+//
+//					Cell cellBottomLeft = getCellBottomLeft(cell);
+//					if (isValidCell(cellBottomLeft))
+//						adjacentCells.add(cellBottomLeft);
+//
+//					Cell cellBottomRight = getCellBottomRight(cell);
+//					if (isValidCell(cellBottomRight))
+//						adjacentCells.add(cellBottomRight);
+					/*
+					  ************************* test **********************
+					 */
+
 					if (isNewIsland(adjacentCells)) {
 						totalNumberIslands++;
 						island = new Island(totalNumberIslands);
@@ -242,7 +264,7 @@ public class FindIsland {
 		Cell c = null;
 		if (cell.coord[0] == 0) {
 		} else {
-			c = MATRIX.get(cell.coord[0] - 1).get(cell.coord[1]);
+			c = MATRIX.get(cell.coord[0]-1).get(cell.coord[1]);
 		}
 		return c;
 	}
@@ -250,9 +272,9 @@ public class FindIsland {
 	private static Cell getCellBelow(Cell cell) {
 		// is cell on bottom border?
 		Cell c = null;
-		if (cell.coord[0] == MATRIX.size() - 1) {
+		if (cell.coord[0] == MATRIX.size()-1) {
 		} else {
-			c = MATRIX.get(cell.coord[0] + 1).get(cell.coord[1]);
+			c = MATRIX.get(cell.coord[0]+1).get(cell.coord[1]);
 		}
 		return c;
 	}
@@ -262,7 +284,7 @@ public class FindIsland {
 		Cell c = null;
 		if (cell.coord[1] == 0) {
 		} else {
-			c = MATRIX.get(cell.coord[0]).get(cell.coord[1] - 1);
+			c = MATRIX.get(cell.coord[0]).get(cell.coord[1]-1);
 		}
 		return c;
 	}
@@ -270,9 +292,43 @@ public class FindIsland {
 	private static Cell getCellRight(Cell cell) {
 		// is cell on right border?
 		Cell c = null;
-		if (cell.coord[1] == MATRIX.size() - 1) {
+		if (cell.coord[1] == MATRIX.size()-1) {
 		} else {
-			c = MATRIX.get(cell.coord[0]).get(cell.coord[1] + 1);
+			c = MATRIX.get(cell.coord[0]).get(cell.coord[1]+1);
+		}
+		return c;
+	}
+
+	private static Cell getCellTopLeft(Cell cell){
+		// cell at top left corner
+		Cell c = null;
+		if( !(cell.coord[0] == 0 || cell.coord[1] == 0) ){
+			c =  MATRIX.get(cell.coord[0]-1).get(cell.coord[1]-1);
+		}
+		return c;
+	}
+
+	private static Cell getCellTopRight(Cell cell){
+		// cell at top right corner
+		Cell c = null;
+		if( !(cell.coord[0] == 0 || cell.coord[1] == MATRIX.size()-1) ){
+			c =  MATRIX.get(cell.coord[0]-1).get(cell.coord[1]+1);
+		}
+		return c;
+	}
+	private static Cell getCellBottomLeft(Cell cell){
+		// cell at bottom left corner
+		Cell c = null;
+		if( !(cell.coord[0] == MATRIX.size()-1 || cell.coord[1] == 0) ){
+			c =  MATRIX.get(cell.coord[0]+1).get(cell.coord[1]-1);
+		}
+		return c;
+	}
+	private static Cell getCellBottomRight(Cell cell){
+		// cell at bottom right corner
+		Cell c = null;
+		if( !(cell.coord[0] == MATRIX.size()-1 || cell.coord[1] == MATRIX.size()-1) ){
+			c =  MATRIX.get(cell.coord[0]+1).get(cell.coord[1]+1);
 		}
 		return c;
 	}
