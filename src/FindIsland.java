@@ -57,9 +57,9 @@ public class FindIsland {
 			printMATRIX(MATRIX);
 			findIslands(MATRIX);
 			resetIslandDetail();
-			//setMATRIXasIslandNum(MATRIX);
-			//System.out.println();
-			//printMATRIX(MATRIX);
+			setMATRIXasIslandNum(MATRIX);
+			System.out.println();
+			printMATRIX(MATRIX);
 			printTotalNumberIslands();
 		}
 	}
@@ -80,7 +80,7 @@ public class FindIsland {
 	}
 
 	/*
-	To inspect the grid for contingent cells, each cell in the grid is converted to a Cell object.  This is the
+	To inspect the grid for CONTIGUOUS (sharing a border) cells, each cell in the grid is converted to a Cell object.  This is the
 	actual 2D matrix that will be used to find the islands
 	 */
 	private static void buildMATRIX(Vector<Vector<String>> matrix) {
@@ -99,10 +99,10 @@ public class FindIsland {
 
 	/*
 	The algorithm will loop through the rows of cells looking for an 'X'.  If one is found, it will immediately search
-	above/below/left/right of itself looking for neighboring cells that also contain an 'X'.  If this cell is not yet
-	part of an island then an island is created, that cell is added to the new island, and the number of total islands
-	are incremented. If cells containing an 'X' are found then they are added to the existing Island object.  If no
-	adjacent 'X' are found, then this indicates a single solitary cell, but an island nonetheless.
+	above/below/left/right of itself looking for contiguous cells that also contain an 'X'.  If this cell is not yet
+	part of an island then an island is created, that cell is added to the new island (incrementing the total # islands)
+	as well as all contiguous 'X' cells found. If no adjacent 'X' are found, then this indicates a single solitary cell,
+	but an island nonetheless.
 	 */
 	private static void findIslands(Vector<Vector<Cell>> matrix) {
 
@@ -112,8 +112,6 @@ public class FindIsland {
 			for (int j = 0; j < matrix.get(i).size(); j++) {
 				Cell cell = matrix.get(i).get(j);
 				if (cell.value.equals("X")) {
-
-					//System.out.println("(a)look at " + cellDetail(cell));
 
 					ArrayList<Cell> adjacentCells = new ArrayList<>();
 
@@ -136,17 +134,16 @@ public class FindIsland {
 
 					if (isNewIsland(adjacentCells)) {
 						totalNumberIslands++;
-						//System.out.println("               island added: total= " + totalNumberIslands);
 						island = new Island(totalNumberIslands);
 						islands.add(island);
 						cell.isIsland = Boolean.TRUE;
 						cell.islandNum = totalNumberIslands;
-						//System.out.println("     (a)add " + cellDetail(cell));
-						//island.cells.add(cell);
-						//System.out.println("add " + cellDetail(cell));
+						island.cells.add(cell);
+					} else {
+						island = getIslandFromCells(adjacentCells);
 					}
 
-					setAdjacentCells(cell, adjacentCells);
+					setAdjacentCells(cell, adjacentCells, island);
 				}
 			}
 		}
@@ -155,45 +152,32 @@ public class FindIsland {
 	/*
 
 	 */
-	private static void setAdjacentCells(Cell cell, ArrayList<Cell> adjacentCells) {
-		Island island;
-		//System.out.println("(b)look at " + cellDetail(cell) + " adj " + adjacentCells.size());
-
-		ArrayList<Cell> tmp = adjacentCells;
-
+	private static void setAdjacentCells(Cell cell, ArrayList<Cell> adjacentCells, Island island) {
 		for (Cell adjacentCell : adjacentCells) {
-
 			if (!adjacentCell.isIsland) {
 				if (adjacentCell.value.equals("X")) {
 					adjacentCell.isIsland = cell.isIsland;
 					adjacentCell.islandNum = cell.islandNum;
-					//System.out.println("     (b)add " + cellDetail(cell));
-					island = getIslandFromCellIslandNum(adjacentCell);
-					//island.cells.add(adjacentCell);
-					//System.out.println("add " + cellDetail(adjacentCell));
+					island.cells.add(adjacentCell);
 				}
 			} else {
-				if (adjacentCell.islandNum < cell.islandNum) {
-					//removeIsland(adjacentCell, cell);
+				if (adjacentCell.islandNum < cell.islandNum) { // this is a *collision*
+					removeIsland(cell, island);
 					 cell.isIsland = adjacentCell.isIsland;
 					 cell.islandNum = adjacentCell.islandNum;
 					totalNumberIslands--;
-					//System.out.println("island removed: total= " + totalNumberIslands);
 				}
 			}
 		}
 	}
 
-
-	private static void removeIsland(Cell adjacentCell, Cell cell) {
-		Island islandToReceive = getIslandFromCellIslandNum(adjacentCell);
-		Island islandToRemove = getIslandFromCellIslandNum(cell);
-		islandToReceive.cells.addAll(islandToRemove.cells);
+	private static void removeIsland(Cell cell, Island island) {
+		Island islandToRemove = getIslandFromCell(cell);
+		island.cells.addAll(island.cells);
 		islands.remove(islandToRemove);
 	}
 
-	private static Island getIslandFromCellIslandNum(Cell cell){
-
+	private static Island getIslandFromCell(Cell cell){
 		Island island = null;
 		for(Island i: islands){
 			if(i.islandNum == cell.islandNum){
@@ -201,6 +185,16 @@ public class FindIsland {
 			}
 		}
 		return island;
+	}
+
+	private static Island getIslandFromCells(ArrayList<Cell> adjacentCells){
+		Cell c = null;
+		for(Cell cell: adjacentCells){
+			if(cell.islandNum != 0){
+				c = cell;
+			}
+		}
+		return getIslandFromCell(c);
 	}
 
 	private static Boolean isValidCell(Cell cell) {
@@ -305,8 +299,7 @@ public class FindIsland {
 	}
 
 	private static void printTotalNumberIslands() {
-//		System.out.println("------------> NUMBER OF ISLANDS FOUND = " + islands.size());
-		System.out.println("------------> NUMBER OF ISLANDS FOUND = " + totalNumberIslands);
+		System.out.println("------------> NUMBER OF ISLANDS FOUND = " + islands.size());
 		System.out.println("**********************************************************");
 	}
 
