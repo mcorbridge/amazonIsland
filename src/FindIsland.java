@@ -289,11 +289,17 @@ public class FindIsland {
 	}
 
 	private static void setMATRIXasIslandNum(Vector<Vector<Cell>> matrix) {
-
-				for (Island island : islands) {
-					System.out.println(islandDetail(island));
+			for (Island island : islands) {
+				for(Cell cell: island.cells){
+					for(Vector<Cell> row: MATRIX){
+						for(Cell c: row){
+							if(c.coord[0] == cell.coord[0] && c.coord[1] == cell.coord[1]){
+								c.value = Integer.toString(cell.islandNum);
+							}
+						}
+					}
 				}
-
+			}
 	}
 
 	private static String cellDetail(Cell cell) {
