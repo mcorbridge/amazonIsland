@@ -440,16 +440,16 @@ public class IslandPattern {
 		return matrix;
 	}
 
-	public static String singleTest =	"OOOOOOOOOO" +
-										"OOOOOOOOOO" +
-										"OOOOOOOOOO" +
-										"OOOOOOOOOO" +
+	public static String singleTest =	"XXXOOOOXXX" +
+										"XXOOOOOOXX" +
+										"XOOOOOOOOX" +
 										"OOOOXOOOOO" +
 										"OOOOOOOOOO" +
 										"OOOOXOOOOO" +
 										"OOOOOOOOOO" +
-										"OOOOOOOOOO" +
-										"OOOOOOOOOO";
+										"XOOOOOOOOX" +
+										"XXOOOOOOOX" +
+										"XXXOOOOXXX";
 
 	public static Vector<Vector<String>> buildSingleTest(){
 		Vector<Vector<String>> matrix = new Vector<Vector<String>>();
@@ -469,4 +469,50 @@ public class IslandPattern {
 		return matrix;
 	}
 
-}
+	public static String diagonal =	"XOOOO" +
+									"OXOOO" +
+									"OOXOO" +
+									"OOOXO" +
+									"OOOOX";
+
+	public static Vector<Vector<String>> buildDiagonal(){
+		Vector<Vector<String>> matrix = new Vector<Vector<String>>();
+		String[] temp = diagonal.split("");
+		int q = 0;
+		int z = 5;
+		for(int n=0;n<5;n++){
+			Vector<String> v = new Vector<>();
+			for(int m=q;m<z;m++){
+				String s = temp[m];
+				v.add(s);
+			}
+			matrix.add(v);
+			q += 5;
+			z += 5;
+		}
+		return matrix;
+	}
+
+	public static String corner =	"OOX" +
+									"OXX" +
+									"XXX";
+
+	public static Vector<Vector<String>> buildCorner(){
+		Vector<Vector<String>> matrix = new Vector<Vector<String>>();
+		String[] temp = corner.split("");
+		int q = 0;
+		int z = 3;
+		for(int n=0;n<3;n++){
+			Vector<String> v = new Vector<>();
+			for(int m=q;m<z;m++){
+				String s = temp[m];
+				v.add(s);
+			}
+			matrix.add(v);
+			q += 3;
+			z += 3;
+		}
+		return matrix;
+	}
+
+} // class
