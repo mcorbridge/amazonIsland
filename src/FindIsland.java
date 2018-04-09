@@ -34,10 +34,10 @@ public class FindIsland {
 		matrixList.add(IslandPattern.buildSimple());
 		matrixList.add(IslandPattern.buildSimpleTwo());
 		matrixList.add(IslandPattern.buildSimpleThree());
-		matrixList.add(IslandPattern.buildSmile());
+//		matrixList.add(IslandPattern.buildSmile());
 		matrixList.add(IslandPattern.buildTest());
 		matrixList.add(IslandPattern.buildSimpleSquare());
-		matrixList.add(IslandPattern.buildTestU());
+//		matrixList.add(IslandPattern.buildTestU());
 		matrixList.add(IslandPattern.buildCross());
 		matrixList.add(IslandPattern.buildBox());
 		matrixList.add(IslandPattern.buildBlock());
@@ -45,6 +45,7 @@ public class FindIsland {
 		matrixList.add(IslandPattern.buildSingleTest());
 		matrixList.add(IslandPattern.buildDiagonal());
 		matrixList.add(IslandPattern.buildCorner());
+		matrixList.add(IslandPattern.buildEx());
 	}
 
 	private static void start() {
@@ -135,21 +136,30 @@ public class FindIsland {
 					/*
 					 ************************* test **********************
 					 */
-//					Cell cellTopLeft = getCellTopLeft(cell);
-//					if (isValidCell(cellTopLeft))
-//						adjacentCells.add(cellTopLeft);
-//
-//					Cell cellTopRight = getCellTopRight(cell);
-//					if (isValidCell(cellTopRight))
-//						adjacentCells.add(cellTopRight);
-//
-//					Cell cellBottomLeft = getCellBottomLeft(cell);
-//					if (isValidCell(cellBottomLeft))
-//						adjacentCells.add(cellBottomLeft);
-//
-//					Cell cellBottomRight = getCellBottomRight(cell);
-//					if (isValidCell(cellBottomRight))
-//						adjacentCells.add(cellBottomRight);
+					Cell cellTopLeft = getCellTopLeft(cell);
+					if (isValidCell(cellTopLeft)){
+						//System.out.println("found cellTopLeft + " + cellDetail(cellTopLeft));
+						adjacentCells.add(cellTopLeft);
+					}
+
+
+					Cell cellTopRight = getCellTopRight(cell);
+					if (isValidCell(cellTopRight)) {
+						//System.out.println("found cellTopRight + " + cellDetail(cellTopRight));
+						adjacentCells.add(cellTopRight);
+					}
+
+					Cell cellBottomLeft = getCellBottomLeft(cell);
+					if (isValidCell(cellBottomLeft)) {
+						//System.out.println("found cellBottomLeft + " + cellDetail(cellBottomLeft));
+						adjacentCells.add(cellBottomLeft);
+					}
+
+					Cell cellBottomRight = getCellBottomRight(cell);
+					if (isValidCell(cellBottomRight)) {
+						//System.out.println("found cellBottomRight + " + cellDetail(cellBottomRight));
+						adjacentCells.add(cellBottomRight);
+					}
 					/*
 					  ************************* test **********************
 					 */
@@ -182,13 +192,11 @@ public class FindIsland {
 	private static void setAdjacentCells(Cell cell, ArrayList<Cell> adjacentCells, Island island) {
 		for (Cell adjacentCell : adjacentCells) {
 			if (!adjacentCell.isIsland) {
-				if (adjacentCell.value.equals("X")) {
-					adjacentCell.isIsland = cell.isIsland;
-					adjacentCell.islandNum = cell.islandNum;
-					isDuplicateCell(cell, island);
-					if(!isDuplicateCell(cell, island)){
-						island.cells.add(cell);
-					}
+				adjacentCell.isIsland = cell.isIsland;
+				adjacentCell.islandNum = cell.islandNum;
+				isDuplicateCell(cell, island);
+				if(!isDuplicateCell(cell, island)){
+					island.cells.add(cell);
 				}
 			} else {
 				if (adjacentCell.islandNum < cell.islandNum) { // this is a *collision*
@@ -243,7 +251,8 @@ public class FindIsland {
 	}
 
 	private static Boolean isValidCell(Cell cell) {
-		return (!(cell == null)) ? Boolean.TRUE : Boolean.FALSE;
+		//return (!(cell == null)) ? Boolean.TRUE : Boolean.FALSE;
+		return (cell != null && cell.value.equals("X")) ? Boolean.TRUE : Boolean.FALSE;
 	}
 
 	private static Boolean isNewIsland(ArrayList<Cell> adjacentCells) {
@@ -302,8 +311,8 @@ public class FindIsland {
 	private static Cell getCellTopLeft(Cell cell){
 		// cell at top left corner
 		Cell c = null;
-		if( !(cell.coord[0] == 0 || cell.coord[1] == 0) ){
-			c =  MATRIX.get(cell.coord[0]-1).get(cell.coord[1]-1);
+		if(!(cell.coord[0] == 0 || cell.coord[1] == 0)) {
+			c = MATRIX.get(cell.coord[0]-1).get(cell.coord[1]-1);
 		}
 		return c;
 	}
@@ -311,24 +320,24 @@ public class FindIsland {
 	private static Cell getCellTopRight(Cell cell){
 		// cell at top right corner
 		Cell c = null;
-		if( !(cell.coord[0] == 0 || cell.coord[1] == MATRIX.size()-1) ){
-			c =  MATRIX.get(cell.coord[0]-1).get(cell.coord[1]+1);
+		if(!(cell.coord[0] == 0 || cell.coord[1] == MATRIX.size()-1)) {
+			c = MATRIX.get(cell.coord[0]-1).get(cell.coord[1]+1);
 		}
 		return c;
 	}
 	private static Cell getCellBottomLeft(Cell cell){
 		// cell at bottom left corner
 		Cell c = null;
-		if( !(cell.coord[0] == MATRIX.size()-1 || cell.coord[1] == 0) ){
-			c =  MATRIX.get(cell.coord[0]+1).get(cell.coord[1]-1);
+		if(!(cell.coord[0] == MATRIX.size()-1 || cell.coord[1] == 0)) {
+			c = MATRIX.get(cell.coord[0]+1).get(cell.coord[1]-1);
 		}
 		return c;
 	}
 	private static Cell getCellBottomRight(Cell cell){
 		// cell at bottom right corner
 		Cell c = null;
-		if( !(cell.coord[0] == MATRIX.size()-1 || cell.coord[1] == MATRIX.size()-1) ){
-			c =  MATRIX.get(cell.coord[0]+1).get(cell.coord[1]+1);
+		if(!(cell.coord[0] == MATRIX.size()-1 || cell.coord[1] == MATRIX.size()-1)) {
+			c = MATRIX.get(cell.coord[0]+1).get(cell.coord[1]+1);
 		}
 		return c;
 	}
