@@ -515,4 +515,28 @@ public class IslandPattern {
 		return matrix;
 	}
 
+	public static String ex =	"XOOOX" +
+								"OXOXO" +
+								"OOXOO" +
+								"OXOXO" +
+								"XOOOX";
+
+	public static Vector<Vector<String>> buildEx(){
+		Vector<Vector<String>> matrix = new Vector<Vector<String>>();
+		String[] temp = ex.split("");
+		int q = 0;
+		int z = 5;
+		for(int n=0;n<5;n++){
+			Vector<String> v = new Vector<>();
+			for(int m=q;m<z;m++){
+				String s = temp[m];
+				v.add(s);
+			}
+			matrix.add(v);
+			q += 5;
+			z += 5;
+		}
+		return matrix;
+	}
+
 } // class

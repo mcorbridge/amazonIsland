@@ -18,7 +18,8 @@ public class FindIsland {
 
 	public static void main(String[] args) {
 		setMatrix();
-		start();
+		//start();
+		startResursion();
 	}
 
 	/*
@@ -63,6 +64,158 @@ public class FindIsland {
 			printMATRIX(MATRIX);
 			printTotalNumberIslands();
 		}
+	}
+
+	private static void startResursion() {
+		Vector<Vector<String>> matrix = matrixList.get(1);
+		islands = new ArrayList<>();
+		MATRIX = new Vector<Vector<Cell>>();
+		totalNumberIslands = 0;
+		buildMATRIX(matrix);
+		printMATRIX(MATRIX);
+		findIslandsResursive();
+		doRecursiveFind(listCells.get(0));
+		doSummary();
+	}
+
+	private static ArrayList<Cell> listCells;
+
+	private static void findIslandsResursive() {
+		listCells = new ArrayList<>();
+		for (int i = 0; i < MATRIX.size(); i++) {
+			for (int j = 0; j < MATRIX.get(i).size(); j++) {
+				Cell cell = MATRIX.get(i).get(j);
+				if (cell.value.equals("X")) {
+					cell.contiguous = getContiguousCells(cell);
+					listCells.add(cell);
+				}
+			}
+		}
+	}
+
+	private static int ndx = 0;
+
+	private static Cell previousCell;
+
+	private static void doRecursiveFind(Cell cell) {
+
+		ndx++;
+
+		if(isTotalNumberIslandsIncrement(cell)){
+			totalNumberIslands++;
+			previousCell = cell;
+		}
+
+		cell.isIsland = Boolean.TRUE;
+		cell.islandNum = totalNumberIslands;
+
+		//System.out.println("[" + ndx + "]" + cellDetail(cell));
+
+		if(cell.contiguous.size() > 0){
+			for(Cell cc: cell.contiguous){
+				if(!cc.isIsland){
+					previousCell = cell;
+					doRecursiveFind(cc);
+				}
+			}
+		}
+
+
+		if(ndx <= listCells.size()-1){
+			doRecursiveFind(getNextCell());
+		}
+	}
+
+	private static void doSummary() {
+		for (Cell cell : listCells) {
+			//System.out.println(cellDetail(cell));
+		}
+	}
+
+	private static Cell getNextCell(){
+		Cell nextCell = null;
+		for (Cell cell: listCells){
+			if(!cell.isIsland){
+				nextCell = cell;
+				break;
+			}
+		}
+		return  nextCell;
+	}
+
+
+	/*
+	we need to reassess this method - should NOT compare contiguous cells in both cells (ya follow?)
+	instead should be the cell coord with the cell contiguous (I think?)
+	 */
+	private static Boolean isTotalNumberIslandsIncrement(Cell cell) {
+		Boolean isIncrement = Boolean.TRUE;
+		if(previousCell == null){
+			isIncrement = Boolean.TRUE;
+		}else{
+			System.out.println(cellDetail(previousCell));
+			System.out.println(cellDetail(cell));
+			for(Cell c1: cell.contiguous){
+				System.out.println("[c1] " + cellDetail(c1));
+				for(Cell c2: previousCell.contiguous){
+					System.out.println("[c2] " + cellDetail(c2));
+					if(c1.coord[0] == c2.coord[0] && c1.coord[1] == c2.coord[1]){
+						System.out.println("MATCH! [" + c1.coord[0] + "," + c1.coord[1] + "][" + c2.coord[0] + "," + c2.coord[1] + "]");
+						isIncrement = Boolean.FALSE;
+						break;
+					}
+				}
+			}
+			System.out.println("increament? " + isIncrement);
+		}
+
+		return isIncrement;
+	}
+
+
+	private static ArrayList<Cell> getContiguousCells(Cell cell) {
+		ArrayList<Cell> adjacentCells = new ArrayList<>();
+
+		// inspect adjacent neighbors
+		Cell cellAbove = getCellAbove(cell);
+		if (isValidCell(cellAbove))
+			adjacentCells.add(cellAbove);
+
+		Cell cellBelow = getCellBelow(cell);
+		if (isValidCell(cellBelow))
+			adjacentCells.add(cellBelow);
+
+		Cell cellLeft = getCellLeft(cell);
+		if (isValidCell(cellLeft))
+			adjacentCells.add(cellLeft);
+
+		Cell cellRight = getCellRight(cell);
+		if (isValidCell(cellRight))
+			adjacentCells.add(cellRight);
+
+		Cell cellTopLeft = getCellTopLeft(cell);
+		if (isValidCell(cellTopLeft)) {
+			adjacentCells.add(cellTopLeft);
+		}
+
+
+		Cell cellTopRight = getCellTopRight(cell);
+		if (isValidCell(cellTopRight)) {
+			adjacentCells.add(cellTopRight);
+		}
+
+		Cell cellBottomLeft = getCellBottomLeft(cell);
+		if (isValidCell(cellBottomLeft)) {
+			adjacentCells.add(cellBottomLeft);
+		}
+
+		Cell cellBottomRight = getCellBottomRight(cell);
+		if (isValidCell(cellBottomRight)) {
+			adjacentCells.add(cellBottomRight);
+		}
+
+		return adjacentCells;
+
 	}
 
 	/*
@@ -137,7 +290,7 @@ public class FindIsland {
 					 ************************* test **********************
 					 */
 					Cell cellTopLeft = getCellTopLeft(cell);
-					if (isValidCell(cellTopLeft)){
+					if (isValidCell(cellTopLeft)) {
 						//System.out.println("found cellTopLeft + " + cellDetail(cellTopLeft));
 						adjacentCells.add(cellTopLeft);
 					}
@@ -171,12 +324,12 @@ public class FindIsland {
 						cell.isIsland = Boolean.TRUE;
 						cell.islandNum = totalNumberIslands;
 						isDuplicateCell(cell, island);
-						if(!isDuplicateCell(cell, island)){
+						if (!isDuplicateCell(cell, island)) {
 							island.cells.add(cell);
 						}
 					} else {
 						island = getIslandFromCells(adjacentCells);
-						if(!isDuplicateCell(cell, island)){
+						if (!isDuplicateCell(cell, island)) {
 							island.cells.add(cell);
 						}
 					}
@@ -195,7 +348,7 @@ public class FindIsland {
 				adjacentCell.isIsland = cell.isIsland;
 				adjacentCell.islandNum = cell.islandNum;
 				isDuplicateCell(cell, island);
-				if(!isDuplicateCell(cell, island)){
+				if (!isDuplicateCell(cell, island)) {
 					island.cells.add(cell);
 				}
 			} else {
@@ -209,10 +362,10 @@ public class FindIsland {
 		}
 	}
 
-	private static Boolean isDuplicateCell(Cell cell, Island island){
+	private static Boolean isDuplicateCell(Cell cell, Island island) {
 		Boolean isDupe = Boolean.FALSE;
-		for(Cell c: island.cells){
-			if(c.coord[0] == cell.coord[0] && c.coord[1] == cell.coord[1]){
+		for (Cell c : island.cells) {
+			if (c.coord[0] == cell.coord[0] && c.coord[1] == cell.coord[1]) {
 				isDupe = Boolean.TRUE;
 			}
 		}
@@ -222,28 +375,28 @@ public class FindIsland {
 
 	private static void removeIsland(Cell cell, Island island) {
 		Island islandToRemove = getIslandFromCell(cell);
-		for (Cell c: islandToRemove.cells) {
-			if(!isDuplicateCell(c, island)){
+		for (Cell c : islandToRemove.cells) {
+			if (!isDuplicateCell(c, island)) {
 				island.cells.add(c);
 			}
 		}
 		islands.remove(islandToRemove);
 	}
 
-	private static Island getIslandFromCell(Cell cell){
+	private static Island getIslandFromCell(Cell cell) {
 		Island island = null;
-		for(Island i: islands){
-			if(i.islandNum == cell.islandNum){
+		for (Island i : islands) {
+			if (i.islandNum == cell.islandNum) {
 				island = i;
 			}
 		}
 		return island;
 	}
 
-	private static Island getIslandFromCells(ArrayList<Cell> adjacentCells){
+	private static Island getIslandFromCells(ArrayList<Cell> adjacentCells) {
 		Cell c = null;
-		for(Cell cell: adjacentCells){
-			if(cell.islandNum != 0){
+		for (Cell cell : adjacentCells) {
+			if (cell.islandNum != 0) {
 				c = cell;
 			}
 		}
@@ -273,7 +426,7 @@ public class FindIsland {
 		Cell c = null;
 		if (cell.coord[0] == 0) {
 		} else {
-			c = MATRIX.get(cell.coord[0]-1).get(cell.coord[1]);
+			c = MATRIX.get(cell.coord[0] - 1).get(cell.coord[1]);
 		}
 		return c;
 	}
@@ -281,9 +434,9 @@ public class FindIsland {
 	private static Cell getCellBelow(Cell cell) {
 		// is cell on bottom border?
 		Cell c = null;
-		if (cell.coord[0] == MATRIX.size()-1) {
+		if (cell.coord[0] == MATRIX.size() - 1) {
 		} else {
-			c = MATRIX.get(cell.coord[0]+1).get(cell.coord[1]);
+			c = MATRIX.get(cell.coord[0] + 1).get(cell.coord[1]);
 		}
 		return c;
 	}
@@ -293,7 +446,7 @@ public class FindIsland {
 		Cell c = null;
 		if (cell.coord[1] == 0) {
 		} else {
-			c = MATRIX.get(cell.coord[0]).get(cell.coord[1]-1);
+			c = MATRIX.get(cell.coord[0]).get(cell.coord[1] - 1);
 		}
 		return c;
 	}
@@ -301,43 +454,45 @@ public class FindIsland {
 	private static Cell getCellRight(Cell cell) {
 		// is cell on right border?
 		Cell c = null;
-		if (cell.coord[1] == MATRIX.size()-1) {
+		if (cell.coord[1] == MATRIX.size() - 1) {
 		} else {
-			c = MATRIX.get(cell.coord[0]).get(cell.coord[1]+1);
+			c = MATRIX.get(cell.coord[0]).get(cell.coord[1] + 1);
 		}
 		return c;
 	}
 
-	private static Cell getCellTopLeft(Cell cell){
+	private static Cell getCellTopLeft(Cell cell) {
 		// cell at top left corner
 		Cell c = null;
-		if(!(cell.coord[0] == 0 || cell.coord[1] == 0)) {
-			c = MATRIX.get(cell.coord[0]-1).get(cell.coord[1]-1);
+		if (!(cell.coord[0] == 0 || cell.coord[1] == 0)) {
+			c = MATRIX.get(cell.coord[0] - 1).get(cell.coord[1] - 1);
 		}
 		return c;
 	}
 
-	private static Cell getCellTopRight(Cell cell){
+	private static Cell getCellTopRight(Cell cell) {
 		// cell at top right corner
 		Cell c = null;
-		if(!(cell.coord[0] == 0 || cell.coord[1] == MATRIX.size()-1)) {
-			c = MATRIX.get(cell.coord[0]-1).get(cell.coord[1]+1);
+		if (!(cell.coord[0] == 0 || cell.coord[1] == MATRIX.size() - 1)) {
+			c = MATRIX.get(cell.coord[0] - 1).get(cell.coord[1] + 1);
 		}
 		return c;
 	}
-	private static Cell getCellBottomLeft(Cell cell){
+
+	private static Cell getCellBottomLeft(Cell cell) {
 		// cell at bottom left corner
 		Cell c = null;
-		if(!(cell.coord[0] == MATRIX.size()-1 || cell.coord[1] == 0)) {
-			c = MATRIX.get(cell.coord[0]+1).get(cell.coord[1]-1);
+		if (!(cell.coord[0] == MATRIX.size() - 1 || cell.coord[1] == 0)) {
+			c = MATRIX.get(cell.coord[0] + 1).get(cell.coord[1] - 1);
 		}
 		return c;
 	}
-	private static Cell getCellBottomRight(Cell cell){
+
+	private static Cell getCellBottomRight(Cell cell) {
 		// cell at bottom right corner
 		Cell c = null;
-		if(!(cell.coord[0] == MATRIX.size()-1 || cell.coord[1] == MATRIX.size()-1)) {
-			c = MATRIX.get(cell.coord[0]+1).get(cell.coord[1]+1);
+		if (!(cell.coord[0] == MATRIX.size() - 1 || cell.coord[1] == MATRIX.size() - 1)) {
+			c = MATRIX.get(cell.coord[0] + 1).get(cell.coord[1] + 1);
 		}
 		return c;
 	}
@@ -354,17 +509,25 @@ public class FindIsland {
 	}
 
 	private static void setMATRIXasIslandNum(Vector<Vector<Cell>> matrix) {
-			for (Island island : islands) {
-				for(Cell cell: island.cells){
-					for(Vector<Cell> row: MATRIX){
-						for(Cell c: row){
-							if(c.coord[0] == cell.coord[0] && c.coord[1] == cell.coord[1]){
-								c.value = Integer.toString(cell.islandNum);
-							}
+		for (Island island : islands) {
+			for (Cell cell : island.cells) {
+				for (Vector<Cell> row : MATRIX) {
+					for (Cell c : row) {
+						if (c.coord[0] == cell.coord[0] && c.coord[1] == cell.coord[1]) {
+							c.value = Integer.toString(cell.islandNum);
 						}
 					}
 				}
 			}
+		}
+	}
+
+	private static String contiguousCells(ArrayList<Cell> cells) {
+		String cellList = "";
+		for (Cell cell : cells) {
+			cellList += "[" + cell.coord[0] + "," + cell.coord[1] + "]";
+		}
+		return cellList;
 	}
 
 	private static String cellDetail(Cell cell) {
@@ -372,6 +535,7 @@ public class FindIsland {
 		detail += " [" + cell.coord[0] + "," + cell.coord[1] + "] ";
 		detail += " value " + cell.value;
 		detail += " isIsland? " + cell.isIsland;
+		detail += " contiguous with: " + contiguousCells(cell.contiguous);
 		detail += " islandNum: " + cell.islandNum;
 		return detail;
 	}

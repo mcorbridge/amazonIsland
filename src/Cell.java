@@ -1,4 +1,4 @@
-
+import java.util.ArrayList;
 
 /**
  * Created by Mike on 4/5/2018.
@@ -19,4 +19,6 @@ public class Cell {
 	public Boolean isIsland = Boolean.FALSE;
 
 	public int[] coord;
+
+	ArrayList<Cell> contiguous;
 }
