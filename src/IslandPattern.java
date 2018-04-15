@@ -539,4 +539,33 @@ public class IslandPattern {
 		return matrix;
 	}
 
+	public static String effu =	"0000000000" +
+								"0000000000" +
+								"X0X0000000" +
+								"X000000000" +
+								"XX00000000" +
+								"X000000000" +
+								"X000000000" +
+								"0000000000" +
+								"0000000000" +
+								"0000000000";
+
+	public static Vector<Vector<String>> buildEffu(){
+		Vector<Vector<String>> matrix = new Vector<Vector<String>>();
+		String[] temp = effu.split("");
+		int q = 0;
+		int z = 10;
+		for(int n=0;n<10;n++){
+			Vector<String> v = new Vector<>();
+			for(int m=q;m<z;m++){
+				String s = temp[m];
+				v.add(s);
+			}
+			matrix.add(v);
+			q += 10;
+			z += 10;
+		}
+		return matrix;
+	}
+
 } // class
