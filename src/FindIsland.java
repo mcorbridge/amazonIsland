@@ -35,10 +35,10 @@ public class FindIsland {
 		matrixList.add(IslandPattern.buildSimple());
 		matrixList.add(IslandPattern.buildSimpleTwo());
 		matrixList.add(IslandPattern.buildSimpleThree());
-//		matrixList.add(IslandPattern.buildSmile());
+		matrixList.add(IslandPattern.buildSmile());
 		matrixList.add(IslandPattern.buildTest());
 		matrixList.add(IslandPattern.buildSimpleSquare());
-//		matrixList.add(IslandPattern.buildTestU());
+		matrixList.add(IslandPattern.buildTestU());
 		matrixList.add(IslandPattern.buildCross());
 		matrixList.add(IslandPattern.buildBox());
 		matrixList.add(IslandPattern.buildBlock());
@@ -67,7 +67,7 @@ public class FindIsland {
 	}
 
 	private static void startResursion() {
-		Vector<Vector<String>> matrix = matrixList.get(1);
+		Vector<Vector<String>> matrix = matrixList.get(18);
 		islands = new ArrayList<>();
 		MATRIX = new Vector<Vector<Cell>>();
 		totalNumberIslands = 0;
@@ -95,31 +95,35 @@ public class FindIsland {
 
 	private static int ndx = 0;
 
-	private static Cell previousCell;
+	private static ArrayList<Cell> inspectedCells = new ArrayList<>();
 
 	private static void doRecursiveFind(Cell cell) {
+
 
 		ndx++;
 
 		if(isTotalNumberIslandsIncrement(cell)){
 			totalNumberIslands++;
-			previousCell = cell;
+			System.out.println(".........................................island added: " + totalNumberIslands);
+			inspectedCells = new ArrayList<>();
+			inspectedCells.add(cell);
 		}
 
 		cell.isIsland = Boolean.TRUE;
 		cell.islandNum = totalNumberIslands;
 
-		//System.out.println("[" + ndx + "]" + cellDetail(cell));
+		System.out.println("{"+ ndx + "} " + cellDetail(cell));
 
 		if(cell.contiguous.size() > 0){
 			for(Cell cc: cell.contiguous){
 				if(!cc.isIsland){
-					previousCell = cell;
+					inspectedCells.add(cell);
+					cell.isIsland = Boolean.TRUE;
+					cell.islandNum = totalNumberIslands;
 					doRecursiveFind(cc);
 				}
 			}
 		}
-
 
 		if(ndx <= listCells.size()-1){
 			doRecursiveFind(getNextCell());
@@ -150,28 +154,34 @@ public class FindIsland {
 	 */
 	private static Boolean isTotalNumberIslandsIncrement(Cell cell) {
 		Boolean isIncrement = Boolean.TRUE;
-		if(previousCell == null){
+		System.out.println("look for [" + cell.coord[0] + "," + cell.coord[1] + "]");
+		System.out.println("in " + showInspectedCellsCoord());
+		if(inspectedCells.size() == 0){
 			isIncrement = Boolean.TRUE;
 		}else{
-			System.out.println(cellDetail(previousCell));
-			System.out.println(cellDetail(cell));
-			for(Cell c1: cell.contiguous){
-				System.out.println("[c1] " + cellDetail(c1));
-				for(Cell c2: previousCell.contiguous){
-					System.out.println("[c2] " + cellDetail(c2));
-					if(c1.coord[0] == c2.coord[0] && c1.coord[1] == c2.coord[1]){
-						System.out.println("MATCH! [" + c1.coord[0] + "," + c1.coord[1] + "][" + c2.coord[0] + "," + c2.coord[1] + "]");
+			for(Cell ic:inspectedCells){
+				for(Cell ac:ic.contiguous){
+					if(cell.coord[0] == ac.coord[0] && cell.coord[1] == ac.coord[1]){
 						isIncrement = Boolean.FALSE;
 						break;
 					}
 				}
 			}
-			System.out.println("increament? " + isIncrement);
 		}
-
+		System.out.println();
 		return isIncrement;
 	}
 
+
+	private static String showInspectedCellsCoord(){
+		String temp = "";
+		for(Cell ic:inspectedCells){
+			for(Cell ac:ic.contiguous){
+				temp += "[" + ac.coord[0] + "," + ac.coord[1] + "] ";
+			}
+		}
+		return temp;
+	}
 
 	private static ArrayList<Cell> getContiguousCells(Cell cell) {
 		ArrayList<Cell> adjacentCells = new ArrayList<>();
