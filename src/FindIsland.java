@@ -1,5 +1,5 @@
 /**
- * Created by Mike on 4/4/2018.
+ * Created by Mike on 4/15/2018.
  * copyright Michael D. Corbridge
  */
 
@@ -26,26 +26,25 @@ public class FindIsland {
 	 */
 	private static void setMatrix() {
 		matrixList = new ArrayList<>();
-		matrixList.add(IslandPattern.buildFourXFour());
-		matrixList.add(IslandPattern.buildFiveXFive());
-		matrixList.add(IslandPattern.buildSixXSix());
-		matrixList.add(IslandPattern.buildTenXTen());
-		matrixList.add(IslandPattern.buildSimple());
-		matrixList.add(IslandPattern.buildSimpleTwo());
-		matrixList.add(IslandPattern.buildSimpleThree());
-		matrixList.add(IslandPattern.buildSmile());
-		matrixList.add(IslandPattern.buildTest());
-		matrixList.add(IslandPattern.buildSimpleSquare());
-		matrixList.add(IslandPattern.buildTestU());
-		matrixList.add(IslandPattern.buildCross());
-		matrixList.add(IslandPattern.buildBox());
-		matrixList.add(IslandPattern.buildBlock());
-		matrixList.add(IslandPattern.buildEmpty());
-		matrixList.add(IslandPattern.buildSingleTest());
-		matrixList.add(IslandPattern.buildDiagonal());
-		matrixList.add(IslandPattern.buildCorner());
-		matrixList.add(IslandPattern.buildEx());
-		matrixList.add(IslandPattern.buildEffu());
+		matrixList.add(IslandPattern.buildMatrix(IslandPattern.fourXfour,4));
+		matrixList.add(IslandPattern.buildMatrix(IslandPattern.empty,4));
+		matrixList.add(IslandPattern.buildMatrix(IslandPattern.block,4));
+		matrixList.add(IslandPattern.buildMatrix(IslandPattern.fiveXfive,5));
+		matrixList.add(IslandPattern.buildMatrix(IslandPattern.test,6));
+		matrixList.add(IslandPattern.buildMatrix(IslandPattern.sixXsix,6));
+		matrixList.add(IslandPattern.buildMatrix(IslandPattern.tenXten,10));
+		matrixList.add(IslandPattern.buildMatrix(IslandPattern.smile,25));
+		matrixList.add(IslandPattern.buildMatrix(IslandPattern.simple,10));
+		matrixList.add(IslandPattern.buildMatrix(IslandPattern.simpleTwo,10));
+		matrixList.add(IslandPattern.buildMatrix(IslandPattern.simpleThree,19));
+		matrixList.add(IslandPattern.buildMatrix(IslandPattern.simpleSquare,20));
+		matrixList.add(IslandPattern.buildMatrix(IslandPattern.testU,6));
+		matrixList.add(IslandPattern.buildMatrix(IslandPattern.cross,5));
+		matrixList.add(IslandPattern.buildMatrix(IslandPattern.singleTest,10));
+		matrixList.add(IslandPattern.buildMatrix(IslandPattern.diagonal,5));
+		matrixList.add(IslandPattern.buildMatrix(IslandPattern.corner,3));
+		matrixList.add(IslandPattern.buildMatrix(IslandPattern.ex,5));
+		matrixList.add(IslandPattern.buildMatrix(IslandPattern.effu,10));
 	}
 
 	private static void start() {
@@ -114,6 +113,7 @@ public class FindIsland {
 
 	private static void doSummary() {
 		System.out.println("TOTAL ISLANDS: " + islands.size());
+		System.out.println("********************************\n");
 	}
 
 	private static Cell getNextCell() {
