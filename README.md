@@ -231,7 +231,7 @@ For example, in this following grid:
 </tbody>
 </table>
 
-Because there are NO contiguous cells (diagonals do NOT count) this represents FIVE islands.
+This represents ONE island since the cells share a common corners.  Although this example was not considered part of the original interview question, I decided to add it myself.
 
 
 Now have a look at the following example of TWO islands:

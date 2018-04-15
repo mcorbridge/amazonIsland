@@ -55,7 +55,7 @@ public class FindIsland {
 			ndx = 0;
 			buildMATRIX(matrix);
 			printMATRIX(MATRIX);
-			buildIslandList();
+			buildCellList();
 			if(listCells.size() == 0){
 				doSummary();
 			}else{
@@ -65,7 +65,7 @@ public class FindIsland {
 		}
 	}
 
-	private static void buildIslandList() {
+	private static void buildCellList() {
 		listCells = new ArrayList<>();
 		for (int i = 0; i < MATRIX.size(); i++) {
 			for (int j = 0; j < MATRIX.get(i).size(); j++) {
@@ -184,7 +184,6 @@ public class FindIsland {
 		if (isValidCell(cellBottomRight)) {
 			adjacentCells.add(cellBottomRight);
 		}
-
 		return adjacentCells;
 	}
 
