@@ -234,45 +234,98 @@ For example, in this following grid:
 This represents ONE island since the cells share a common corners.  Although this example was not considered part of the original interview question, I decided to add it myself.
 
 
-Now have a look at the following example of TWO islands:
+Now have a look at the following two examples of TWO islands:
 
 <table>
 <tbody>
-<tr>
-<td>X</td>
-<td>X</td>
-<td>X</td>
-<td>X</td>
-<td>X</td>
-</tr>
-<tr>
-<td>X</td>
-<td>X</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr>
-<td>X</td>
-<td>X</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr>
-<td>X</td>
-<td>X</td>
-<td>0</td>
-<td>X</td>
-<td>X</td>
-</tr>
-<tr>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>X</td>
-</tr>
+	<tr>
+	<td>
+		<table>
+		<tbody>
+		<tr>
+		<td>X</td>
+		<td>X</td>
+		<td>0</td>
+		<td>0</td>
+		<td>0</td>
+		</tr>
+		<tr>
+		<td>X</td>
+		<td>X</td>
+		<td>0</td>
+		<td>0</td>
+		<td>0</td>
+		</tr>
+		<tr>
+		<td>X</td>
+		<td>0</td>
+		<td>0</td>
+		<td>0</td>
+		<td>X</td>
+		</tr>
+		<tr>
+		<td>X</td>
+		<td>0</td>
+		<td>0</td>
+		<td>X</td>
+		<td>0</td>
+		</tr>
+		<tr>
+		<td>0</td>
+		<td>0</td>
+		<td>0</td>
+		<td>0</td>
+		<td>X</td>
+		</tr>
+		</tbody>
+		</table>
+	</td>
+	<td>
+	and
+	</td>
+	<td>
+    		<table>
+    		<tbody>
+    		<tr>
+    		<td>X</td>
+    		<td>0</td>
+    		<td>0</td>
+    		<td>0</td>
+    		<td>0</td>
+    		</tr>
+    		<tr>
+    		<td>0</td>
+    		<td>X</td>
+    		<td>X</td>
+    		<td>0</td>
+    		<td>0</td>
+    		</tr>
+    		<tr>
+    		<td>0</td>
+    		<td>0</td>
+    		<td>0</td>
+    		<td>X</td>
+    		<td>0</td>
+    		</tr>
+    		<tr>
+    		<td>X</td>
+    		<td>X</td>
+    		<td>0</td>
+    		<td>X</td>
+    		<td>0</td>
+    		</tr>
+    		<tr>
+    		<td>X</td>
+    		<td>X</td>
+    		<td>0</td>
+    		<td>0</td>
+    		<td>X</td>
+    		</tr>
+    		</tbody>
+    		</table>
+    	</td>
+	<tr>
+
 </tbody>
 </table>
 
