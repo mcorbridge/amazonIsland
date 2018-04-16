@@ -57,11 +57,14 @@ public class FindIsland {
 			printMATRIX(MATRIX);
 			buildCellList();
 			if(listCells.size() == 0){
-				doSummary();
+				//doSummary();
 			}else{
 				findIslands(listCells.get(0));
-				doSummary();
+				//doSummary();
 			}
+			System.out.println("----------------");
+			printIslandNum();
+			doSummary();
 		}
 	}
 
@@ -83,7 +86,7 @@ public class FindIsland {
 		ndx++;
 		Island island;
 
-		if (isTotalNumberIslandsIncrement(cell)) {
+		if (isAddIsland(cell)) {
 			island = new Island(islandNdx);
 			cell.isIsland = Boolean.TRUE;
 			cell.islandNum = islandNdx;
@@ -91,7 +94,7 @@ public class FindIsland {
 			islands.add(island);
 			islandNdx++;
 		}else{
-			island = islands.get(cell.islandNum);
+			island = getIsland(cell);
 			cell.isIsland = Boolean.TRUE;
 			cell.islandNum = island.islandNum;
 			island.cells.add(cell);
@@ -111,6 +114,20 @@ public class FindIsland {
 		}
 	}
 
+	private static Island getIsland(Cell cell){
+		Island rIsland = null;
+		for(Island island:islands){
+			for(Cell ic:island.cells){
+				for(Cell cc:ic.contiguous){
+					if(cc.coord[0] == cell.coord[0] && cc.coord[1] == cell.coord[1]){
+						rIsland = island;
+					}
+				}
+			}
+		}
+		return rIsland;
+	}
+
 	private static void doSummary() {
 		System.out.println("TOTAL ISLANDS: " + islands.size());
 		System.out.println("********************************\n");
@@ -127,7 +144,7 @@ public class FindIsland {
 		return nextCell;
 	}
 
-	private static Boolean isTotalNumberIslandsIncrement(Cell cell) {
+	private static Boolean isAddIsland(Cell cell) {
 		Boolean isIncrement = Boolean.TRUE;
 		if (islands.size() == 0) {
 			isIncrement = Boolean.TRUE;
@@ -146,45 +163,45 @@ public class FindIsland {
 	}
 
 	private static ArrayList<Cell> getContiguousCells(Cell cell) {
-		ArrayList<Cell> adjacentCells = new ArrayList<>();
+		ArrayList<Cell> contiguousCells = new ArrayList<>();
 
 		// inspect adjacent neighbors
 		Cell cellAbove = getCellAbove(cell);
 		if (isValidCell(cellAbove))
-			adjacentCells.add(cellAbove);
+			contiguousCells.add(cellAbove);
 
 		Cell cellBelow = getCellBelow(cell);
 		if (isValidCell(cellBelow))
-			adjacentCells.add(cellBelow);
+			contiguousCells.add(cellBelow);
 
 		Cell cellLeft = getCellLeft(cell);
 		if (isValidCell(cellLeft))
-			adjacentCells.add(cellLeft);
+			contiguousCells.add(cellLeft);
 
 		Cell cellRight = getCellRight(cell);
 		if (isValidCell(cellRight))
-			adjacentCells.add(cellRight);
+			contiguousCells.add(cellRight);
 
 		Cell cellTopLeft = getCellTopLeft(cell);
 		if (isValidCell(cellTopLeft)) {
-			adjacentCells.add(cellTopLeft);
+			contiguousCells.add(cellTopLeft);
 		}
 
 		Cell cellTopRight = getCellTopRight(cell);
 		if (isValidCell(cellTopRight)) {
-			adjacentCells.add(cellTopRight);
+			contiguousCells.add(cellTopRight);
 		}
 
 		Cell cellBottomLeft = getCellBottomLeft(cell);
 		if (isValidCell(cellBottomLeft)) {
-			adjacentCells.add(cellBottomLeft);
+			contiguousCells.add(cellBottomLeft);
 		}
 
 		Cell cellBottomRight = getCellBottomRight(cell);
 		if (isValidCell(cellBottomRight)) {
-			adjacentCells.add(cellBottomRight);
+			contiguousCells.add(cellBottomRight);
 		}
-		return adjacentCells;
+		return contiguousCells;
 	}
 
 	/*
@@ -299,17 +316,22 @@ public class FindIsland {
 		return c;
 	}
 
-	private static void setMATRIXasIslandNum(Vector<Vector<Cell>> matrix) {
-		for (Island island : islands) {
-			for (Cell cell : island.cells) {
-				for (Vector<Cell> row : MATRIX) {
-					for (Cell c : row) {
-						if (c.coord[0] == cell.coord[0] && c.coord[1] == cell.coord[1]) {
-							c.value = Integer.toString(cell.islandNum);
-						}
-					}
+	private static void printIslandNum() {
+
+		StringBuilder row = null;
+		for(Vector<Cell> cells:MATRIX){
+			row = new StringBuilder();
+			for(Cell cell: cells){
+				if(cell.isIsland && cell.islandNum == 0){
+					cell.islandNum = cell.islandNum + 1;
+					cell.value = Integer.toString(cell.islandNum);
+				}else if(cell.isIsland){
+					cell.islandNum = cell.islandNum + 1;
+					cell.value = Integer.toString(cell.islandNum);
 				}
+				row.append(cell.value).append(" ");
 			}
+			System.out.println(row);
 		}
 	}
 
