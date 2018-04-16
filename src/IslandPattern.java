@@ -41,10 +41,22 @@ public class IslandPattern {
 									"XXXX";
 
 	public static String fiveXfive =  	"XOOOX" +
-										"XXOOX" +
-										"XOOOO" +
-										"OOOXO" +
-										"OOOXO";
+			"XXOOX" +
+			"XOOOO" +
+			"OOOXO" +
+			"OOOXO";
+
+	public static String testFive =  	"XXOOO" +
+										"XXOOO" +
+										"XOOOX" +
+										"XOOXO" +
+										"XOOOX";
+
+	public static String testJive =  	"XOOXX" +
+										"OXXOX" +
+										"OOXOO" +
+										"XOXXO" +
+										"XXOOX";
 
 	public static String test =		"OOOOOO" +
 									"OOOXOO" +

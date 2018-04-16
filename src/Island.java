@@ -7,7 +7,7 @@ import java.util.ArrayList;
  */
 public class Island {
 
-	public ArrayList<Cell> cells = new ArrayList<>();
+	public ArrayList<int[]> cellCoord = new ArrayList<>();
 	public int islandNum;
 
 
@@ -15,7 +15,11 @@ public class Island {
 		this.islandNum = islandNum;
 	}
 
-
+	public void addCoord(Cell cell){
+		for(Cell cc:cell.contiguous){
+			cellCoord.add(cc.coord);
+		}
+	}
 
 
 
