@@ -189,7 +189,7 @@ Ya follow? How about this one:
 
 This represents ONE island as well.  Any 'X' that borders another 'X' horizontally or vertically (contiguous) combine to form a single island.
 
-For example, in this following grid:
+Now consider this grid:
 
 <table>
 <tbody>
@@ -231,10 +231,11 @@ For example, in this following grid:
 </tbody>
 </table>
 
-This represents ONE island since the cells share a common corners.  Although this example was not considered part of the original interview question, I decided to add it myself.
+This represents ONE island since the cells share a common corners.  
+(Although this example was not considered part of the original interview question, I decided to add this functionality to my algorithm.)
 
 
-Now have a look at the following two examples of TWO islands:
+Now have a look at the following examples of TWO islands in each grid:
 
 <table>
 <tbody>
@@ -329,11 +330,13 @@ Now have a look at the following two examples of TWO islands:
 </tbody>
 </table>
 
+Now go write the algorithm to find contiguous cells in any size grid.
+
 Simple, eh?
 
-Maybe ... I'm a just an organic chemist / environmental scientist / stone mason.   I have never taken a course in computer algorithms, and I certainly didn't know what the secret was and in the 15 minutes remaining in the interview, I wasn't going to solve it.
+Maybe ... I'm a just an organic chemist / environmental scientist / stone mason.   I have never taken a course in computer algorithms, and although I knew that recursion was part of the solution, I certainly didn't know what the final algorithm might be, nor was I about to discover it in the 15 minutes remaining in the interview.
 
-Oh, and to make matters worse you are supposed solve this real time in front of the interviewer using some web based text editor that makes Notepad look like Intellij.
+Oh, and to make matters worse you are supposed solve this real time in front of the interviewer using some web based text editor that makes Notepad look like Intellij?!
 
 But I wasn't going to go down without a fight.  So after the interview I poured a cup of coffee, sparked up Intellij and wrote an algorithm in Java that solves the challenge.
 
