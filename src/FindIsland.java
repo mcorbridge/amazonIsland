@@ -3,9 +3,8 @@
  * copyright Michael D. Corbridge
  */
 
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
-
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Vector;
 
 public class FindIsland {
@@ -17,14 +16,19 @@ public class FindIsland {
 	private static ArrayList<Cell> listCells;
 	private static int ndx;
 
+
+	/**
+	 *
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		setMatrix();
 		start();
 	}
 
-	/*
-	To test the algorithm under a number of cases, a bunch of 2D matrices are created and supplied to the algorithm to ensure
-	that it works universally
+	/**
+	 To test the algorithm under a number of cases, a bunch of 2D matrices are created and supplied to the algorithm to ensure
+	 that it works universally
 	 */
 	private static void setMatrix() {
 		matrixList = new ArrayList<>();
@@ -51,6 +55,9 @@ public class FindIsland {
 		matrixList.add(IslandPattern.buildMatrix(IslandPattern.testJive, 5));
 	}
 
+	/**
+	 *
+	 */
 	private static void start() {
 		for (Vector<Vector<String>> matrix : matrixList) {
 			islands = new ArrayList<>();
@@ -69,6 +76,9 @@ public class FindIsland {
 		}
 	}
 
+	/**
+	 *
+	 */
 	private static void buildCellList() {
 		listCells = new ArrayList<>();
 		for (int i = 0; i < MATRIX.size(); i++) {
@@ -82,6 +92,10 @@ public class FindIsland {
 		}
 	}
 
+	/**
+	 *
+	 * @param cell
+	 */
 	private static void findIslands(Cell cell) {
 
 		ndx++;
@@ -121,6 +135,11 @@ public class FindIsland {
 		}
 	}
 
+	/**
+	 *
+	 * @param cell
+	 * @return
+	 */
 	private static Boolean isAddIsland(Cell cell) {
 		Boolean isIncrement = Boolean.TRUE;
 		if (islands.size() == 0) {
@@ -139,10 +158,16 @@ public class FindIsland {
 		return isIncrement;
 	}
 
+	/**
+	 *
+	 * @param coord
+	 * @param cells
+	 * @return
+	 */
 	private static Boolean compareCoord(int[] coord, ArrayList<Cell> cells){
 		Boolean isMatch = Boolean.FALSE;
 		for(Cell cell : cells){
-			if (coord[0] == cell.coord[0] && coord[1] == cell.coord[1]) {
+			if(Arrays.equals(coord, cell.coord)){
 				isMatch = Boolean.TRUE;
 				break;
 			}
@@ -150,13 +175,18 @@ public class FindIsland {
 		return isMatch;
 	}
 
+	/**
+	 *
+	 * @param cell
+	 * @return
+	 */
 	private static Island getIsland(Cell cell) {
 		Island rIsland = null;
 		outerloop:
 		for (Island island : islands) {
 			for (int[] ic : island.cellCoord) {
 				for(Cell cc: cell.contiguous){
-					if (ic[0] == cc.coord[0] && ic[1] == cc.coord[1]) {
+					if(Arrays.equals(ic, cc.coord)){
 						rIsland = island;
 						break outerloop;
 					}
@@ -166,11 +196,18 @@ public class FindIsland {
 		return rIsland;
 	}
 
+	/**
+	 *  simple function that outputs the number of islands found based on the 'islands' ArrayList size.
+	 */
 	private static void doSummary() {
 		System.out.println("TOTAL ISLANDS: " + islands.size());
 		System.out.println("********************************\n");
 	}
 
+	/**
+	 *
+	 * @return
+	 */
 	private static Cell getNextCell() {
 		Cell nextCell = null;
 		for (Cell cell : listCells) {
@@ -182,7 +219,11 @@ public class FindIsland {
 		return nextCell;
 	}
 
-
+	/**
+	 *
+	 * @param cell
+	 * @return
+	 */
 	private static ArrayList<Cell> getContiguousCells(Cell cell) {
 		ArrayList<Cell> contiguousCells = new ArrayList<>();
 
@@ -241,8 +282,8 @@ public class FindIsland {
 	}
 
 	/*
-	To inspect the grid for CONTIGUOUS (sharing a border or corner) cells, each cell in the grid is converted to a Cell object.  This is the
-	actual 2D matrix that will be used to find the islands
+	To inspect the grid for CONTIGUOUS (sharing a border or corner) cells, each cell in the grid is converted to a Cell
+	object.  This is the actual 2D matrix that will be used to find the islands
 	 */
 	private static void buildMATRIX(Vector<Vector<String>> matrix) {
 		for (int i = 0; i < matrix.size(); i++) {
@@ -257,12 +298,28 @@ public class FindIsland {
 		}
 	}
 
+
+	/**
+	 *
+	 * @param cell
+	 * @return
+	 */
 	private static Boolean isValidCell(Cell cell) {
 		return (cell != null && cell.value.equals("X")) ? Boolean.TRUE : Boolean.FALSE;
 	}
 
+	/**
+	 * When describing groups of cells as individual islands, each cell is associated to another in the same island as
+	 * having at least one neighbor cell to the left, right, top, bottom - or at the topLeft, topRight, bottomLeft, or
+	 * bottomRight corner. That is, at least one of eight possible options that indicates it is part of a contiguous
+	 * group (island).  The following group of eight functions takes the original [row,column] coordinates and inspects
+	 * each neighboring cell (if does not extend past the grid border) to see it is and 'X'. If it does, then that cell
+	 * is added to the 'contiguous' ArrayList property that comprises the Cell object.
+	 */
+	/*
+	 (1) cell above target cell
+	 */
 	private static Cell getCellAbove(Cell cell) {
-		// is cell on top border?
 		Cell c = null;
 		if (cell.coord[0] == 0) {
 		} else {
@@ -271,6 +328,9 @@ public class FindIsland {
 		return c;
 	}
 
+	/*
+	(2) cell below target cell
+	 */
 	private static Cell getCellBelow(Cell cell) {
 		// is cell on bottom border?
 		Cell c = null;
@@ -281,6 +341,9 @@ public class FindIsland {
 		return c;
 	}
 
+	/*
+	(3) cell left of target cell
+	 */
 	private static Cell getCellLeft(Cell cell) {
 		// is cell on left border?
 		Cell c = null;
@@ -291,6 +354,9 @@ public class FindIsland {
 		return c;
 	}
 
+	/*
+	(4) cell right of target cell
+	 */
 	private static Cell getCellRight(Cell cell) {
 		// is cell on right border?
 		Cell c = null;
@@ -301,6 +367,9 @@ public class FindIsland {
 		return c;
 	}
 
+	/*
+	(5) cell at top left right corner of target cell
+	 */
 	private static Cell getCellTopLeft(Cell cell) {
 		// cell at top left corner
 		Cell c = null;
@@ -310,6 +379,9 @@ public class FindIsland {
 		return c;
 	}
 
+	/*
+	(6) cell at top right corner of target cell
+	 */
 	private static Cell getCellTopRight(Cell cell) {
 		// cell at top right corner
 		Cell c = null;
@@ -319,6 +391,9 @@ public class FindIsland {
 		return c;
 	}
 
+	/*
+	(7) cell at bottom right corner of target cell
+	 */
 	private static Cell getCellBottomLeft(Cell cell) {
 		// cell at bottom left corner
 		Cell c = null;
@@ -328,8 +403,10 @@ public class FindIsland {
 		return c;
 	}
 
+	/*
+	(8) cell at bottom right corner of target cell
+	 */
 	private static Cell getCellBottomRight(Cell cell) {
-		// cell at bottom right corner
 		Cell c = null;
 		if (!(cell.coord[0] == MATRIX.size() - 1 || cell.coord[1] == MATRIX.size() - 1)) {
 			c = MATRIX.get(cell.coord[0] + 1).get(cell.coord[1] + 1);
@@ -337,6 +414,10 @@ public class FindIsland {
 		return c;
 	}
 
+
+	/**
+	 *
+	 */
 	private static void printIslandNum() {
 
 		StringBuilder row = null;
@@ -356,6 +437,11 @@ public class FindIsland {
 		}
 	}
 
+	/**
+	 *
+	 * @param cells
+	 * @return
+	 */
 	private static String contiguousCells(ArrayList<Cell> cells) {
 		String cellList = "";
 		for (Cell cell : cells) {
@@ -364,6 +450,11 @@ public class FindIsland {
 		return cellList;
 	}
 
+	/**
+	 *
+	 * @param cell
+	 * @return
+	 */
 	private static String cellDetail(Cell cell) {
 		String detail = "";
 		detail += " [" + cell.coord[0] + "," + cell.coord[1] + "] ";
@@ -374,6 +465,11 @@ public class FindIsland {
 		return detail;
 	}
 
+	/**
+	 *
+	 * @param island
+	 * @return
+	 */
 	private static String islandDetail(Island island) {
 		String detail = "";
 		detail += "island num {" + island.islandNum + "} ";
