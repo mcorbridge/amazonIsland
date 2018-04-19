@@ -54,6 +54,7 @@ public class FindIsland {
 		matrixList.add(IslandPattern.buildMatrix(IslandPattern.effu,new int[]{10,10}));
 		matrixList.add(IslandPattern.buildMatrix(IslandPattern.testFive,new int[]{5,5}));
 		matrixList.add(IslandPattern.buildMatrix(IslandPattern.testJive, new int[]{5,5}));
+		matrixList.add(IslandPattern.buildMatrix(IslandPattern.box, new int[]{10,10}));
 	}
 
 	/**
@@ -84,7 +85,7 @@ public class FindIsland {
 	 *  The MATRIX (apologies to Neo) is built up of cells that comprise the entire grid.  However we are only concerned
 	 *  with cells that contain an 'X'. Thus this function filters out only those cells containing 'X' AND finds all the
 	 *  neighboring cells that also contain an 'X'.  Thus 'listCells' is the fuel for 'findIslands'.  Feed 'findIslands'
-	 *  an ArrayList of cells from 'buildCellList' containing information about it's contiguous cells, and watch it go to
+	 *  an ArrayList of cells from 'buildCellList' containing information about its contiguous cells, and watch it go to
 	 *  work.
 	 *
 	 */
@@ -152,9 +153,9 @@ public class FindIsland {
 	}
 
 	/**
-	 * What is an island?  Without getting too philosophical, an island is an 'X' cell that is surrounded by 'O' cells
-	 * EXCEPT!! for the first Cell containing an 'X', where no islands have previously been discovered, which just seeds
-	 * the whole process.
+	 * What is an island?  Without getting too philosophical, an island is an 'X' cell/cells that is/are surrounded by
+	 * 'O' cells.  EXCEPT!! for the first Cell containing an 'X', where no islands have previously been discovered, which
+	 * just seeds the whole process.
 	 * @param cell
 	 * @return
 	 */
@@ -240,7 +241,7 @@ public class FindIsland {
 	}
 
 	/**
-	 * Finding islands means looking at it's neighbors to establish it's relationship with them.  A neighbor is defined
+	 * Finding islands means looking at its neighbors to establish its relationship with them.  A neighbor is defined
 	 * as any cell: above,below,left of, right of, or at the topLeft, topRight, bottomLeft, or bottomRight corner. If that
 	 * cell contains an 'X', then it is added to the list of that cells contiguous cells.  I could have made this easier
 	 * by just looking at those cells above, below, left or right ... but that was too boring!
@@ -439,7 +440,7 @@ public class FindIsland {
 
 
 	/**
-	 * Ya want further proof!  Well then this is it!  Each cell is printed out as it's island number (starting at 1)
+	 * Ya want further proof!  Well then this is it!  Each cell is printed out as its island number (starting at 1)
 	 */
 	private static void printIslandNum() {
 
