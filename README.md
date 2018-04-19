@@ -344,6 +344,8 @@ Have a look, and I hope your Amazon interview goes better than mine!
 
 You can see this app running online  at: https://www.codiva.io/p/fef9772c-e319-4121-8590-4b8dc14f2d6b
 
+Click on the 'FindIsland.java' file, then hit RUN.  I don't know why it prompts with 'There are compilation errors', but just click OK and then run again. Apologies for the size of the output panel.  I didn't write the UI.
+
 
 
 
