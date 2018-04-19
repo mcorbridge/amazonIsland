@@ -32,27 +32,28 @@ public class FindIsland {
 	 */
 	private static void setMatrix() {
 		matrixList = new ArrayList<>();
-		matrixList.add(IslandPattern.buildMatrix(IslandPattern.fourXfour,4));
-		matrixList.add(IslandPattern.buildMatrix(IslandPattern.empty,4));
-		matrixList.add(IslandPattern.buildMatrix(IslandPattern.block,4));
-		matrixList.add(IslandPattern.buildMatrix(IslandPattern.fiveXfive,5));
-		matrixList.add(IslandPattern.buildMatrix(IslandPattern.test,6));
-		matrixList.add(IslandPattern.buildMatrix(IslandPattern.sixXsix,6));
-		matrixList.add(IslandPattern.buildMatrix(IslandPattern.tenXten,10));
-		matrixList.add(IslandPattern.buildMatrix(IslandPattern.smile,25));
-		matrixList.add(IslandPattern.buildMatrix(IslandPattern.simple,10));
-		matrixList.add(IslandPattern.buildMatrix(IslandPattern.simpleTwo,10));
-		matrixList.add(IslandPattern.buildMatrix(IslandPattern.simpleThree,19));
-		matrixList.add(IslandPattern.buildMatrix(IslandPattern.simpleSquare,20));
-		matrixList.add(IslandPattern.buildMatrix(IslandPattern.testU,6));
-		matrixList.add(IslandPattern.buildMatrix(IslandPattern.cross,5));
-		matrixList.add(IslandPattern.buildMatrix(IslandPattern.singleTest,10));
-		matrixList.add(IslandPattern.buildMatrix(IslandPattern.diagonal,5));
-		matrixList.add(IslandPattern.buildMatrix(IslandPattern.corner,3));
-		matrixList.add(IslandPattern.buildMatrix(IslandPattern.ex,5));
-		matrixList.add(IslandPattern.buildMatrix(IslandPattern.effu,10));
-		matrixList.add(IslandPattern.buildMatrix(IslandPattern.testFive,5));
-		matrixList.add(IslandPattern.buildMatrix(IslandPattern.testJive, 5));
+		matrixList.add(IslandPattern.buildMatrix(IslandPattern.fiveXfour, new int[]{4,5}));
+		matrixList.add(IslandPattern.buildMatrix(IslandPattern.fourXfour,new int[]{4,4}));
+		matrixList.add(IslandPattern.buildMatrix(IslandPattern.empty,new int[]{4,4}));
+		matrixList.add(IslandPattern.buildMatrix(IslandPattern.block,new int[]{4,4}));
+		matrixList.add(IslandPattern.buildMatrix(IslandPattern.fiveXfive,new int[]{5,5}));
+		matrixList.add(IslandPattern.buildMatrix(IslandPattern.test,new int[]{6,6}));
+		matrixList.add(IslandPattern.buildMatrix(IslandPattern.sixXsix,new int[]{6,6}));
+		matrixList.add(IslandPattern.buildMatrix(IslandPattern.tenXten,new int[]{10,10}));
+		matrixList.add(IslandPattern.buildMatrix(IslandPattern.smile,new int[]{25,25}));
+		matrixList.add(IslandPattern.buildMatrix(IslandPattern.simple,new int[]{10,10}));
+		matrixList.add(IslandPattern.buildMatrix(IslandPattern.simpleTwo,new int[]{10,10}));
+		matrixList.add(IslandPattern.buildMatrix(IslandPattern.simpleThree,new int[]{19,19}));
+		matrixList.add(IslandPattern.buildMatrix(IslandPattern.simpleSquare,new int[]{20,20}));
+		matrixList.add(IslandPattern.buildMatrix(IslandPattern.testU,new int[]{6,6}));
+		matrixList.add(IslandPattern.buildMatrix(IslandPattern.cross,new int[]{5,5}));
+		matrixList.add(IslandPattern.buildMatrix(IslandPattern.singleTest,new int[]{10,10}));
+		matrixList.add(IslandPattern.buildMatrix(IslandPattern.diagonal,new int[]{5,5}));
+		matrixList.add(IslandPattern.buildMatrix(IslandPattern.corner,new int[]{3,3}));
+		matrixList.add(IslandPattern.buildMatrix(IslandPattern.ex,new int[]{5,5}));
+		matrixList.add(IslandPattern.buildMatrix(IslandPattern.effu,new int[]{10,10}));
+		matrixList.add(IslandPattern.buildMatrix(IslandPattern.testFive,new int[]{5,5}));
+		matrixList.add(IslandPattern.buildMatrix(IslandPattern.testJive, new int[]{5,5}));
 	}
 
 	/**
