@@ -1,5 +1,6 @@
 
 
+import java.util.Arrays;
 import java.util.Vector;
 
 /**
@@ -7,23 +8,54 @@ import java.util.Vector;
  */
 public class IslandPattern {
 
-	public static Vector<Vector<String>> buildMatrix(String matrixString, int dim){
-		Vector<Vector<String>> matrix = new Vector<Vector<String>>();
+	/**
+	 * It needs to be easy to create string representations of the grid used in the algorithm.  That makes it
+	 * easy to test your artistic skills and create your own fancy grid. Go ahead!  Try to fool the algorithm!
+	 * But...the algorithm finds it hard to digest Strings, so we make it more palatable by turning them into Vectors
+	 * Yum! Originally I built this around a square, but that was BORING!  Hence this algorithm accepts rectangles - a
+	 * square is a rectangle, but a rectangle is not a .... oh, you know the rest.
+	 * @param matrixString
+	 * @param dim
+	 * @return Vector<Vector<String>>
+	 */
+	public static Vector<Vector<String>> buildMatrix(String matrixString, int[] dim){
+		Vector<Vector<String>> matrix = new Vector<>();
 		String[] temp = matrixString.split("");
+
 		int q = 0;
-		int z = dim;
-		for(int n=0;n<dim;n++){
-			Vector<String> v = new Vector<>();
-			for(int m=q;m<z;m++){
-				String s = temp[m];
-				v.add(s);
-			}
-			matrix.add(v);
-			q += dim;
-			z += dim;
+		int z = dim[1];
+
+		for(int n=0;n<dim[0];n++){
+			String[] range = Arrays.copyOfRange(temp,q,z);
+			q = q + dim[1];
+			z =  z + dim[1];
+			Vector<String> vector = getVector(range);
+			matrix.add(vector);
 		}
 		return matrix;
 	}
+
+	/**
+	 * Side routine to take each row and return a vector
+	 * @param range
+	 * @return Vector<String>
+	 */
+	public static Vector<String> getVector(String[] range){
+		Vector<String> vector = new Vector<>();
+		for(int n=0;n<range.length;n++){
+			vector.add(range[n]);
+		}
+		return vector;
+	}
+
+	/** *********************************************************************************
+	 *							TEST GRIDS
+	 ************************************************************************************/
+	public static String fiveXfour =  	"XOOOO" +
+										"OXOOO" +
+										"OOXOO" +
+										"OOOXO";
+
 
 	public static String fourXfour =  	"XXOO" +
 										"XXOO" +

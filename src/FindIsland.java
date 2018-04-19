@@ -27,14 +27,14 @@ public class FindIsland {
 	}
 
 	/**
-	 To test the algorithm under a number of cases, a bunch of 2D matrices are created and supplied to the algorithm to ensure
-	 that it works universally
+	 To test the algorithm under a number of cases, a bunch of 2D matrices are created and supplied to the algorithm to
+	 ensure that it works universally
 	 */
 	private static void setMatrix() {
 		matrixList = new ArrayList<>();
-		matrixList.add(IslandPattern.buildMatrix(IslandPattern.fiveXfour, new int[]{4,5}));
-		matrixList.add(IslandPattern.buildMatrix(IslandPattern.fourXfour,new int[]{4,4}));
-		matrixList.add(IslandPattern.buildMatrix(IslandPattern.empty,new int[]{4,4}));
+		matrixList.add(IslandPattern.buildMatrix(IslandPattern.fiveXfour, new int[]{4,5})); // this is a rectangle
+		matrixList.add(IslandPattern.buildMatrix(IslandPattern.fourXfour,new int[]{4,4})); // this is a square grid
+		matrixList.add(IslandPattern.buildMatrix(IslandPattern.empty,new int[]{4,4})); // so this this ...
 		matrixList.add(IslandPattern.buildMatrix(IslandPattern.block,new int[]{4,4}));
 		matrixList.add(IslandPattern.buildMatrix(IslandPattern.fiveXfive,new int[]{5,5}));
 		matrixList.add(IslandPattern.buildMatrix(IslandPattern.test,new int[]{6,6}));
@@ -57,27 +57,35 @@ public class FindIsland {
 	}
 
 	/**
+	 * Start .. what does 'start' do?  It STARTS the whole process!  Since this algorithm is tested against any rectangular
+	 * grid containing a mix of "X's" and "O's" we rip through a list of test matrices created in 'setMatrix'.  Note that
+	 * if some goof adds a grid with NO "X's", the algorithm is bypassed.
 	 *
 	 */
 	private static void start() {
 		for (Vector<Vector<String>> matrix : matrixList) {
 			islands = new ArrayList<>();
-			MATRIX = new Vector<Vector<Cell>>();
+			MATRIX = new Vector<>();
 			islandNdx = 0;
 			ndx = 0;
 			buildMATRIX(matrix);
-			printMATRIX(MATRIX);
+			printMATRIX(MATRIX); // provide a visual of the grid currently being investigated
 			buildCellList();
-			if (listCells.size() > 0) {
+			if (listCells.size() > 0) { // run ONLY if at least one 'X' is present
 				findIslands(listCells.get(0));
 			}
 			System.out.println("----------------");
-			printIslandNum();
-			doSummary();
+			printIslandNum();  // annotate each 'X' as the island number
+			doSummary(); // how many islands did you find?
 		}
 	}
 
 	/**
+	 *  The MATRIX (apologies to Neo) is built up of cells that comprise the entire grid.  However we are only concerned
+	 *  with cells that contain an 'X'. Thus this function filters out only those cells containing 'X' AND finds all the
+	 *  neighboring cells that also contain an 'X'.  Thus 'listCells' is the fuel for 'findIslands'.  Feed 'findIslands'
+	 *  an ArrayList of cells from 'buildCellList' containing information about it's contiguous cells, and watch it go to
+	 *  work.
 	 *
 	 */
 	private static void buildCellList() {
@@ -94,7 +102,14 @@ public class FindIsland {
 	}
 
 	/**
-	 *
+	 * This is the meat of the algorithm.
+	 * Basically the original grid has now been boiled down to just those cells containing an 'X' by the previous 'buildCellList'
+	 * function. To recap, it has looked at each of those cells (as a Cell object) and added all its neighbors (contiguous cells). Now
+	 * comes the hard part: This function walks through each Cell relationships recursively to find its neighbors and update
+	 * its island status (boolean), and the island (islandNum) that it now belongs to. If a cell looks at a neighboring cell
+	 * and sees that it already belongs to an island, then that cell must join that island.  If none of its neighboring
+	 * cells belongs to an island it must be a new island and the process continues until all cells have been inspected.
+	 * As they say in the business: "easy peasy lemon squeezy"
 	 * @param cell
 	 */
 	private static void findIslands(Cell cell) {
@@ -125,19 +140,21 @@ public class FindIsland {
 					cc.islandNum = cell.islandNum;
 					island = islands.get(cell.islandNum);
 					island.addCoord(cc);
-					findIslands(cc);
+					findIslands(cc);   // <-- recursion!
 				}
 			}
 		}
 
 		if (ndx <= listCells.size() - 1) {
 			Cell nextCell = getNextCell();
-			findIslands(nextCell);
+			findIslands(nextCell); // <-- recursion!
 		}
 	}
 
 	/**
-	 *
+	 * What is an island?  Without getting too philosophical, an island is an 'X' cell that is surrounded by 'O' cells
+	 * EXCEPT!! for the first Cell containing an 'X', where no islands have previously been discovered, which just seeds
+	 * the whole process.
 	 * @param cell
 	 * @return
 	 */
@@ -160,7 +177,7 @@ public class FindIsland {
 	}
 
 	/**
-	 *
+	 * A side routine to test if [0,1] is equal to [0,1] given that an array in java is a primitive.
 	 * @param coord
 	 * @param cells
 	 * @return
@@ -177,7 +194,9 @@ public class FindIsland {
 	}
 
 	/**
-	 *
+	 * Islands are comprised of cells, and each island stores the coords [row,column] of the cells that currently
+	 * comprise that island.  If a cell is currently an island (boolean) then an inspection of the islands will return
+	 * the Island object it is related to.
 	 * @param cell
 	 * @return
 	 */
@@ -206,7 +225,7 @@ public class FindIsland {
 	}
 
 	/**
-	 *
+	 * Makes sure we run through the entire list of cells that are designed with the 'X'
 	 * @return
 	 */
 	private static Cell getNextCell() {
@@ -221,7 +240,10 @@ public class FindIsland {
 	}
 
 	/**
-	 *
+	 * Finding islands means looking at it's neighbors to establish it's relationship with them.  A neighbor is defined
+	 * as any cell: above,below,left of, right of, or at the topLeft, topRight, bottomLeft, or bottomRight corner. If that
+	 * cell contains an 'X', then it is added to the list of that cells contiguous cells.  I could have made this easier
+	 * by just looking at those cells above, below, left or right ... but that was too boring!
 	 * @param cell
 	 * @return
 	 */
@@ -312,10 +334,10 @@ public class FindIsland {
 	/**
 	 * When describing groups of cells as individual islands, each cell is associated to another in the same island as
 	 * having at least one neighbor cell to the left, right, top, bottom - or at the topLeft, topRight, bottomLeft, or
-	 * bottomRight corner. That is, at least one of eight possible options that indicates it is part of a contiguous
-	 * group (island).  The following group of eight functions takes the original [row,column] coordinates and inspects
+	 * bottomRight corner. That is, the cell has at least one of eight possible options that indicates it is part of a contiguous
+	 * group (island).  The following group of eight functions takes the cell [row,column] coordinates and inspects
 	 * each neighboring cell (if does not extend past the grid border) to see it is and 'X'. If it does, then that cell
-	 * is added to the 'contiguous' ArrayList property that comprises the Cell object.
+	 * is added to the 'contiguous' property that comprises the Cell object.
 	 */
 	/*
 	 (1) cell above target cell
@@ -417,7 +439,7 @@ public class FindIsland {
 
 
 	/**
-	 *
+	 * Ya want further proof!  Well then this is it!  Each cell is printed out as it's island number (starting at 1)
 	 */
 	private static void printIslandNum() {
 
@@ -437,9 +459,11 @@ public class FindIsland {
 			System.out.println(row);
 		}
 	}
-
+	/** *********************************************************************
+	 *							UTIL FUNCTIONS
+	 ********************************************************************** */
 	/**
-	 *
+	 * debug tool to show the coords of the contiguous cells related to a Cell
 	 * @param cells
 	 * @return
 	 */
@@ -452,7 +476,7 @@ public class FindIsland {
 	}
 
 	/**
-	 *
+	 * debug tool to show the detail of the Cell object
 	 * @param cell
 	 * @return
 	 */
@@ -467,7 +491,7 @@ public class FindIsland {
 	}
 
 	/**
-	 *
+	 * debug tool (wait! you needed to debug this code?) to show the detail of the Island object
 	 * @param island
 	 * @return
 	 */
