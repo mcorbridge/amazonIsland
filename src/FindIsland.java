@@ -55,7 +55,7 @@ public class FindIsland {
 		matrixList.add(IslandPattern.buildMatrix(IslandPattern.testFive,new int[]{5,5}));
 		matrixList.add(IslandPattern.buildMatrix(IslandPattern.testJive, new int[]{5,5}));
 		matrixList.add(IslandPattern.buildMatrix(IslandPattern.box, new int[]{10,10}));
-		matrixList.add(IslandPattern.buildMatrix(IslandPattern.mattKevin, new int[]{10,10}));
+		matrixList.add(IslandPattern.buildMatrix(IslandPattern.mattKevin, new int[]{12,10}));
 	}
 
 	/**
