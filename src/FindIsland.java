@@ -119,7 +119,7 @@ public class FindIsland {
 		ndx++;
 		Island island;
 
-		if (isAddIsland(cell)) {
+		if (isAddIsland(cell)) {    // Is this cell a new island?  The first 'X' encuntered is always an island
 			island = new Island(islandNdx);
 			cell.isIsland = Boolean.TRUE;
 			cell.islandNum = islandNdx;
@@ -127,7 +127,7 @@ public class FindIsland {
 			islands.add(island);
 			islandNdx++;
 		} else {
-			if (!cell.isIsland) {
+			if (!cell.isIsland) { // this cell already belongs to an existing island
 				island = getIsland(cell);
 				cell.isIsland = Boolean.TRUE;
 				cell.islandNum = island.islandNum;
@@ -135,14 +135,14 @@ public class FindIsland {
 			}
 		}
 
-		if (cell.contiguous.size() > 0) {
+		if (cell.contiguous.size() > 0) {   // all the contiguous cells in this Cell object MUST belong to that cells island
 			for (Cell cc : cell.contiguous) {
 				if (!cc.isIsland) {
 					cc.isIsland = Boolean.TRUE;
 					cc.islandNum = cell.islandNum;
 					island = islands.get(cell.islandNum);
 					island.addCoord(cc);
-					findIslands(cc);   // <-- recursion!
+					findIslands(cc);   // <-- recursion!   But what about the contiguous cells in the Cell objects contiguous cell?
 				}
 			}
 		}

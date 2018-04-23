@@ -20,5 +20,5 @@ public class Cell {
 
 	public int[] coord;
 
-	ArrayList<Cell> contiguous;
+	public ArrayList<Cell> contiguous;
 }
