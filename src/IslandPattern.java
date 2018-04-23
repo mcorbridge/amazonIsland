@@ -267,4 +267,15 @@ public class IslandPattern {
 								"0000000000" +
 								"0000000000";
 
+	public static String mattKevin =	"0000000000" +
+										"0000000000" +
+										"XX0000XX00" +
+										"X0X00X0X00" +
+										"X00X0X0X00" +
+										"X000X00X00" +
+										"X000000X00" +
+										"0000000000" +
+										"X0X0X0X0X0" +
+										"0000000000";
+
 } // class

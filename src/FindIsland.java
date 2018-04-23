@@ -34,7 +34,7 @@ public class FindIsland {
 		matrixList = new ArrayList<>();
 		matrixList.add(IslandPattern.buildMatrix(IslandPattern.fiveXfour, new int[]{4,5})); // this is a rectangle
 		matrixList.add(IslandPattern.buildMatrix(IslandPattern.fourXfour,new int[]{4,4})); // this is a square grid
-		matrixList.add(IslandPattern.buildMatrix(IslandPattern.empty,new int[]{4,4})); // so this this ...
+		matrixList.add(IslandPattern.buildMatrix(IslandPattern.empty,new int[]{4,4})); // so is this ...
 		matrixList.add(IslandPattern.buildMatrix(IslandPattern.block,new int[]{4,4}));
 		matrixList.add(IslandPattern.buildMatrix(IslandPattern.fiveXfive,new int[]{5,5}));
 		matrixList.add(IslandPattern.buildMatrix(IslandPattern.test,new int[]{6,6}));
@@ -55,6 +55,7 @@ public class FindIsland {
 		matrixList.add(IslandPattern.buildMatrix(IslandPattern.testFive,new int[]{5,5}));
 		matrixList.add(IslandPattern.buildMatrix(IslandPattern.testJive, new int[]{5,5}));
 		matrixList.add(IslandPattern.buildMatrix(IslandPattern.box, new int[]{10,10}));
+		matrixList.add(IslandPattern.buildMatrix(IslandPattern.mattKevin, new int[]{10,10}));
 	}
 
 	/**
