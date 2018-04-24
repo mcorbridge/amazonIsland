@@ -15,7 +15,7 @@ public class IslandPattern {
 	 * Yum! Originally I built this around a square, but that was BORING!  Hence this algorithm accepts rectangles - a
 	 * square is a rectangle, but a rectangle is not a .... oh, you know the rest.
 	 * @param matrixString
-	 * @param dim
+	 * @param dim int[rows,columns]
 	 * @return Vector<Vector<String>>
 	 */
 	public static Vector<Vector<String>> buildMatrix(String matrixString, int[] dim){
@@ -276,6 +276,8 @@ public class IslandPattern {
 										"X000000X00" +
 										"0000000000" +
 										"X0X0X0X0X0" +
-										"0000000000";
+										"X0X0X0X0X0" +
+										"X0X0X0X0X0" +
+										"X0X0X0X0X0";
 
 } // class
