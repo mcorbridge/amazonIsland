@@ -231,11 +231,11 @@ Now consider this grid:
 </tbody>
 </table>
 
-This represents ONE island since the cells share a common corners.  
+This represents ONE island since the cells share common corners (Bingo!).  
 (Although this example was not considered part of the original interview question, I decided to add this functionality to my algorithm.)
 
 
-Now have a look at the following examples of TWO islands in each grid:
+Have a look at the following examples of TWO islands in each grid:
 
 <table>
 <tbody>
