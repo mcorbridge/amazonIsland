@@ -242,8 +242,8 @@ public class FindIsland {
 	}
 
 	/**
-	 * Finding islands means looking at its neighbors to establish its relationship with them.  A neighbor is defined
-	 * as any cell: above,below,left of, right of, or at the topLeft, topRight, bottomLeft, or bottomRight corner. If that
+	 * Finding islands means looking at its cells neighboring cells to establish their relationship to that cell.  A neighbor is defined
+	 * as any cell: above, below, left of, right of, or at the topLeft, topRight, bottomLeft, or bottomRight corner. If that
 	 * cell contains an 'X', then it is added to the list of that cells contiguous cells.  I could have made this easier
 	 * by just looking at those cells above, below, left or right ... but that was too boring!
 	 * @param cell
@@ -252,9 +252,9 @@ public class FindIsland {
 	private static ArrayList<Cell> getContiguousCells(Cell cell) {
 		ArrayList<Cell> contiguousCells = new ArrayList<>();
 
-		// inspect adjacent neighbors
+		// inspect ALL adjacent cells
 		Cell cellAbove = getCellAbove(cell);
-		if (isValidCell(cellAbove))
+		if (isValidCell(cellAbove)) // the 'isValidCell' method ensures the neighboring cell is an 'X' and it is not outside the grid border
 			contiguousCells.add(cellAbove);
 
 		Cell cellBelow = getCellBelow(cell);
